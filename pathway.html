@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Community Pharmacist Pathway – Alcohol Dependence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #f1f5f9; color: #1e293b; }
+
+  .header { background: #1e3a5f; color: white; padding: 20px 28px; }
+  .header .sub { font-family: sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #93c5fd; margin-bottom: 6px; }
+  .header h1 { font-size: 18px; line-height: 1.4; }
+  .header .source { font-family: sans-serif; font-size: 12px; color: #bfdbfe; margin-top: 4px; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+
+  .box { border-radius: 10px; padding: 12px 18px; font-size: 13px; font-weight: 600; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .box.entry    { background: white; color: #1e293b; border: 2px solid #dc2626; }
+  .box.entry .sub-note { font-family: sans-serif; font-size: 11px; color: #374151; font-weight: normal; margin-top: 4px; }
+  .box.question { background: #c0392b; color: white; max-width: 380px; margin: 0 auto; }
+  .box.blue     { background: #1a7abf; color: white; }
+  .box.grey     { background: #768692; color: white; }
+  .box.orange   { background: #e07b39; color: white; font-size: 12px; }
+  .box.navy     { background: #1e3a5f; color: white; }
+  .box.teal     { background: #0077a8; color: white; }
+
+  .arrow-wrap { display: flex; flex-direction: column; align-items: center; margin: 6px 0; }
+  .arrow-label { font-family: sans-serif; font-size: 11px; font-weight: 700; margin-bottom: 2px; }
+  .arrow-line  { width: 2px; height: 20px; }
+  .arrow-head  { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; }
+
+  .btn-row { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .btn { border: none; cursor: pointer; padding: 8px 22px; border-radius: 999px; font-family: sans-serif; font-size: 12px; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: opacity 0.15s; }
+  .btn:hover { opacity: 0.85; }
+  .btn.yes  { background: #16a34a; color: white; }
+  .btn.no   { background: #dc2626; color: white; }
+  .btn.blue { background: #2563eb; color: white; }
+  .btn.navy { background: #1e3a5f; color: white; }
+  .btn.reset { background: transparent; border: none; color: #2563eb; font-family: sans-serif; font-size: 12px; text-decoration: underline; cursor: pointer; margin-bottom: 14px; }
+
+  .branches { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 4px; }
+  .branch { display: flex; flex-direction: column; align-items: center; }
+
+  .panel { background: white; border-radius: 10px; padding: 14px; width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-family: sans-serif; font-size: 12px; }
+  .panel-title { font-weight: 700; font-size: 12px; margin-bottom: 6px; }
+  .panel ul { padding-left: 14px; }
+  .panel ul li { margin-bottom: 3px; }
+
+  .thiamine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-top: 8px; }
+  .thiamine-label { font-family: sans-serif; font-size: 11px; font-weight: 700; text-align: center; color: #4b5563; margin-bottom: 4px; }
+
+  .accordion { border-radius: 8px; overflow: hidden; margin-top: 8px; border: 1px solid #dbeafe; }
+  .accordion-header { width: 100%; text-align: left; background: #eff6ff; color: #1d4ed8; padding: 8px 12px; font-family: sans-serif; font-size: 11px; font-weight: 700; border: none; cursor: pointer; display: flex; justify-content: space-between; }
+  .accordion-body { padding: 10px 12px; background: white; font-family: sans-serif; font-size: 11px; color: #374151; display: none; }
+  .accordion-body.open { display: block; }
+  .accordion-row { display: flex; gap: 6px; margin-bottom: 5px; }
+  .accordion-ref { color: #9ca3af; font-size: 10px; font-family: monospace; flex-shrink: 0; margin-top: 1px; }
+  .accordion.disulfiram .accordion-header { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
+
+  .baseline { border: 2px solid #f59e0b; background: #fffbeb; border-radius: 10px; overflow: hidden; max-width: 600px; margin: 0 auto 16px; }
+  .baseline-header { width: 100%; text-align: left; padding: 8px 14px; background: #fef3c7; font-family: sans-serif; font-size: 12px; font-weight: 700; color: #92400e; border: none; cursor: pointer; display: flex; justify-content: space-between; }
+  .baseline-body { padding: 10px 14px; font-family: sans-serif; font-size: 12px; color: #78350f; display: none; }
+  .baseline-body.open { display: block; }
+  .baseline-body p { margin-bottom: 4px; }
+
+  .for-all { background: #1e3a5f; color: white; border-radius: 10px; padding: 16px 18px; font-family: sans-serif; font-size: 12px; margin-top: 20px; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .for-all h3 { font-size: 13px; margin-bottom: 10px; }
+  .for-all-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .for-all h4 { color: #93c5fd; font-size: 11px; margin-bottom: 5px; }
+  .for-all ul { padding-left: 14px; }
+  .for-all li { color: #bfdbfe; margin-bottom: 3px; }
+
+  .not-rec-header { width: 100%; text-align: left; padding: 10px 14px; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; font-family: sans-serif; font-size: 12px; font-weight: 700; color: #b91c1c; cursor: pointer; display: flex; justify-content: space-between; margin-top: 14px; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .not-rec-body { border: 1px solid #fca5a5; border-top: none; border-radius: 0 0 10px 10px; background: white; padding: 12px 14px; display: none; max-width: 760px; margin: 0 auto; }
+  .not-rec-body.open { display: block; }
+  .not-rec-row { display: flex; gap: 8px; font-family: sans-serif; font-size: 12px; color: #374151; margin-bottom: 5px; }
+  .not-rec-ref { color: #9ca3af; font-size: 10px; font-family: monospace; flex-shrink: 0; margin-top: 2px; }
+
+  .refer-note { font-family: sans-serif; font-size: 11px; text-align: center; color: #6b7280; margin-top: 6px; }
+  .hidden { display: none !important; }
+  .footer { text-align: center; font-family: sans-serif; font-size: 10px; color: #9ca3af; margin-top: 30px; padding-top: 14px; border-top: 1px solid #e2e8f0; }
+
+  .gateway { display:flex; align-items:center; justify-content:center; gap:10px; background:#1e7a3a; color:white; border-radius:8px; padding:8px 20px; font-family:sans-serif; font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; max-width:500px; margin:10px auto; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
+  .gateway-wrap { display:flex; flex-direction:column; align-items:center; width:100%; }
+  .drug-option.first { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; }
+  .drug-option.alt   { background: #f8fafc; border: 1px solid #cbd5e1; color: #475569; }
+
+  /* ── AUDIT QUESTIONNAIRE ── */
+  .audit-wrap { max-width: 680px; margin: 0 auto 20px; background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow: hidden; }
+  .audit-header { background: #1a7abf; color: white; padding: 12px 18px; font-family: sans-serif; }
+  .audit-header h2 { font-size: 14px; font-weight: 700; }
+  .audit-header p  { font-size: 11px; color: #bfdbfe; margin-top: 3px; }
+  .audit-body { padding: 16px 18px; }
+  .audit-q { margin-bottom: 14px; font-family: sans-serif; }
+  .audit-q-text { font-size: 12px; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
+  .audit-q-num  { display: inline-block; background: #1a7abf; color: white; border-radius: 50%; width: 20px; height: 20px; text-align: center; line-height: 20px; font-size: 10px; font-weight: 700; margin-right: 6px; flex-shrink: 0; }
+  .audit-options { display: flex; flex-wrap: wrap; gap: 6px; }
+  .audit-opt { border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 5px 10px; font-size: 11px; cursor: pointer; background: white; transition: all 0.15s; color: #374151; }
+  .audit-opt:hover { border-color: #1a7abf; color: #1a7abf; }
+  .audit-opt.selected { background: #1a7abf; color: white; border-color: #1a7abf; font-weight: 700; }
+  .audit-submit { width: 100%; margin-top: 10px; padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; font-family: sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity 0.15s; }
+  .audit-submit:hover { opacity: 0.88; }
+  .audit-result { margin: 12px 18px 16px; border-radius: 10px; padding: 14px 16px; font-family: sans-serif; display: none; }
+  .audit-result.open { display: block; }
+  .audit-result h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .audit-result p  { font-size: 12px; line-height: 1.6; }
+  .audit-result .score-badge { display: inline-block; border-radius: 999px; padding: 4px 14px; font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .result-low    { background: #f0fdf4; border: 2px solid #86efac; color: #166534; }
+  .result-mod    { background: #fffbeb; border: 2px solid #fcd34d; color: #92400e; }
+  .result-high   { background: #fef2f2; border: 2px solid #fca5a5; color: #991b1b; }
+  .audit-reset { background: none; border: none; font-family: sans-serif; font-size: 11px; color: #6b7280; text-decoration: underline; cursor: pointer; margin-top: 8px; }
+  .proceed-btn { margin-top: 10px; padding: 8px 20px; background: #16a34a; color: white; border: none; border-radius: 999px; font-family: sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .proceed-btn:hover { opacity: 0.88; }
+
+
+  /* ── FIXED RIGHT SIDEBAR ── */
+  .sb-wrap {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 260px;
+    height: 100vh;
+    overflow-y: auto;
+    background: #f8fafc;
+    border-left: 2px solid #e2e8f0;
+    font-family: sans-serif;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  body { padding-right: 260px; }
+  .sb-section { border-bottom: 1px solid #e2e8f0; }
+  .sb-header {
+    width: 100%; text-align: left; padding: 11px 14px;
+    background: #1e3a5f; color: white; font-size: 12px; font-weight: 700;
+    border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  }
+  .sb-header:hover { background: #16305a; }
+  .sb-body { display: none; background: white; }
+  .sb-body.open { display: block; }
+  .staff-body { padding: 10px 12px; font-size: 11px; color: #374151; line-height: 1.6; }
+  .staff-body p { margin-bottom: 5px; }
+  .staff-body strong { color: #1e3a5f; }
+  .med-tabs { display: flex; flex-wrap: wrap; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; }
+  .med-tab {
+    padding: 6px 9px; font-size: 10px; font-weight: 700; cursor: pointer;
+    color: #6b7280; border: none; background: none;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .med-tab.active { color: #1e3a5f; border-bottom-color: #1e3a5f; background: white; }
+  .med-panel { display: none; padding: 10px 12px; font-size: 11px; color: #374151; }
+  .med-panel.active { display: block; }
+  .med-label { font-weight: 700; color: #1e3a5f; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px; margin-bottom: 2px; }
+  .med-label:first-child { margin-top: 0; }
+  .pom-badge { display: inline-block; background: #fef2f2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 3px; padding: 1px 6px; font-size: 10px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Community Pharmacist Interventions for Moderate and Severe Alcohol Dependence After Successful Assisted Withdrawal</h1>
+  <div class="source">Based on NICE guideline [CG115] section 1.3.6</div>
+</div>
+
+<div class="container">
+
+  <button class="btn reset hidden" id="resetBtn" onclick="reset()">← Reset pathway</button>
+
+  <div style="display:flex;flex-direction:column;align-items:center;">
+
+    <!-- Entry -->
+    <div class="box entry" style="max-width:480px;width:100%;">
+      Patient discharged from hospital after <u>successful alcohol withdrawal</u>
+      <div class="sub-note">Referred to established community pharmacies in the area</div>
+    </div>
+
+    <div class="arrow-wrap">
+      <div class="arrow-line" style="background:#1e3a5f;"></div>
+      <div class="arrow-head" style="border-top:8px solid #1e3a5f;"></div>
+    </div>
+
+    <!-- Stability question -->
+    <div class="box question">Is the patient clinically stable?</div>
+    <div class="btn-row" id="stableButtons">
+      <button class="btn yes" onclick="chooseStable(true)">YES ✓</button>
+      <button class="btn no"  onclick="chooseStable(false)">NO ✗</button>
+    </div>
+
+    <!-- NOT STABLE -->
+    <div id="notStable" class="hidden" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+      <div class="arrow-wrap">
+        <div class="arrow-label" style="color:#c0392b;">NO</div>
+        <div class="arrow-line" style="background:#c0392b;"></div>
+        <div class="arrow-head" style="border-top:8px solid #c0392b;"></div>
+      </div>
+      <div style="font-family:sans-serif;font-size:11px;background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;padding:12px 16px;max-width:460px;width:100%;color:#374151;">
+        <p style="font-weight:700;color:#b91c1c;margin-bottom:8px;">Red flag withdrawal symptoms — do not proceed:</p>
+        <p style="margin-bottom:3px;">• Delirium tremens (confusion, disorientation, hallucinations)</p>
+        <p style="margin-bottom:3px;">• Seizures</p>
+        <p style="margin-bottom:3px;">• Severe uncontrolled tremor or agitation</p>
+        <p style="margin-bottom:10px;">• Profuse sweating, tachycardia or hypertension</p>
+        <p style="margin-bottom:3px;">If any of the above are present:</p>
+        <p style="margin-bottom:3px;padding-left:12px;"><strong>Severe symptoms (seizure, delirium):</strong> call 999 immediately</p>
+        <p style="margin-bottom:10px;padding-left:12px;"><strong>Mild–moderate symptoms:</strong> refer urgently to GP or A&amp;E</p>
+        <p style="font-style:italic;">Do not initiate or dispense any medication until the patient is medically reviewed and confirmed stable.</p>
+      </div>
+    </div>
+
+    <!-- STABLE -->
+    <div id="stablePath" class="hidden" style="width:100%;">
+
+      <div class="arrow-wrap">
+        <div class="arrow-label" style="color:#16a34a;">YES</div>
+        <div class="arrow-line" style="background:#16a34a;"></div>
+        <div class="arrow-head" style="border-top:8px solid #16a34a;"></div>
+      </div>
+
+      <!-- Gateway 1 -->
+      <div class="gateway-wrap">
+        <div class="gateway">⬡ Gateway Point</div>
+        <div style="font-family:sans-serif;font-size:11px;color:#374151;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;max-width:500px;width:100%;text-align:left;margin-bottom:8px;">
+          <p style="margin-bottom:4px;">• Withdrawal severity confirmed via CIWA-Ar before discharge</p>
+          <p>• Confirm patient has a valid hospital discharge summary documenting successful assisted withdrawal</p>
+        </div>
+      </div>
+
+      <!-- ══════════════ AUDIT QUESTIONNAIRE ══════════════ -->
+      <div class="audit-wrap">
+        <div class="audit-header">
+          <h2>AUDIT — Alcohol Use Disorders Identification Test</h2>
+          <p>Complete to classify dependence severity and guide treatment selection &nbsp;·&nbsp; WHO / NICE recommended</p>
+        </div>
+        <div class="audit-body" id="auditForm">
+
+          <!-- Q1 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">1</span>How often do you have a drink containing alcohol?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,1,0)">Never</button>
+              <button class="audit-opt" onclick="selectOpt(this,1,1)">Monthly or less</button>
+              <button class="audit-opt" onclick="selectOpt(this,1,2)">2–4 times/month</button>
+              <button class="audit-opt" onclick="selectOpt(this,1,3)">2–3 times/week</button>
+              <button class="audit-opt" onclick="selectOpt(this,1,4)">4+ times/week</button>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">2</span>How many units of alcohol do you drink on a typical day when you are drinking?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,2,0)">1–2</button>
+              <button class="audit-opt" onclick="selectOpt(this,2,1)">3–4</button>
+              <button class="audit-opt" onclick="selectOpt(this,2,2)">5–6</button>
+              <button class="audit-opt" onclick="selectOpt(this,2,3)">7–9</button>
+              <button class="audit-opt" onclick="selectOpt(this,2,4)">10+</button>
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">3</span>How often have you had 6 or more units on a single occasion in the last year?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,3,0)">Never</button>
+              <button class="audit-opt" onclick="selectOpt(this,3,1)">Less than monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,3,2)">Monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,3,3)">Weekly</button>
+              <button class="audit-opt" onclick="selectOpt(this,3,4)">Daily or almost daily</button>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">4</span>How often during the last year have you found that you were not able to stop drinking once you had started?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,4,0)">Never</button>
+              <button class="audit-opt" onclick="selectOpt(this,4,1)">Less than monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,4,2)">Monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,4,3)">Weekly</button>
+              <button class="audit-opt" onclick="selectOpt(this,4,4)">Daily or almost daily</button>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">5</span>How often during the last year have you failed to do what was normally expected from you because of your drinking?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,5,0)">Never</button>
+              <button class="audit-opt" onclick="selectOpt(this,5,1)">Less than monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,5,2)">Monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,5,3)">Weekly</button>
+              <button class="audit-opt" onclick="selectOpt(this,5,4)">Daily or almost daily</button>
+            </div>
+          </div>
+
+          <!-- Q6 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">6</span>How often during the last year have you needed a first drink in the morning to get yourself going after a heavy drinking session?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,6,0)">Never</button>
+              <button class="audit-opt" onclick="selectOpt(this,6,1)">Less than monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,6,2)">Monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,6,3)">Weekly</button>
+              <button class="audit-opt" onclick="selectOpt(this,6,4)">Daily or almost daily</button>
+            </div>
+          </div>
+
+          <!-- Q7 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">7</span>How often during the last year have you had a feeling of guilt or remorse after drinking?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,7,0)">Never</button>
+              <button class="audit-opt" onclick="selectOpt(this,7,1)">Less than monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,7,2)">Monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,7,3)">Weekly</button>
+              <button class="audit-opt" onclick="selectOpt(this,7,4)">Daily or almost daily</button>
+            </div>
+          </div>
+
+          <!-- Q8 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">8</span>How often during the last year have you been unable to remember what happened the night before because you had been drinking?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,8,0)">Never</button>
+              <button class="audit-opt" onclick="selectOpt(this,8,1)">Less than monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,8,2)">Monthly</button>
+              <button class="audit-opt" onclick="selectOpt(this,8,3)">Weekly</button>
+              <button class="audit-opt" onclick="selectOpt(this,8,4)">Daily or almost daily</button>
+            </div>
+          </div>
+
+          <!-- Q9 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">9</span>Have you or somebody else been injured as a result of your drinking?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,9,0)">No</button>
+              <button class="audit-opt" onclick="selectOpt(this,9,2)">Yes, but not in the last year</button>
+              <button class="audit-opt" onclick="selectOpt(this,9,4)">Yes, during the last year</button>
+            </div>
+          </div>
+
+          <!-- Q10 -->
+          <div class="audit-q">
+            <div class="audit-q-text"><span class="audit-q-num">10</span>Has a relative, friend, doctor or other health worker been concerned about your drinking or suggested you cut down?</div>
+            <div class="audit-options">
+              <button class="audit-opt" onclick="selectOpt(this,10,0)">No</button>
+              <button class="audit-opt" onclick="selectOpt(this,10,2)">Yes, but not in the last year</button>
+              <button class="audit-opt" onclick="selectOpt(this,10,4)">Yes, during the last year</button>
+            </div>
+          </div>
+
+          <button class="audit-submit" onclick="calcAudit()">Calculate AUDIT Score →</button>
+          <div style="text-align:center;margin-top:10px;">
+            <button class="audit-reset" onclick="proceedToPathway()" style="color:#1e3a5f;font-size:12px;">Skip AUDIT and proceed to pathway →</button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="audit-result" id="auditResult">
+          <div class="score-badge" id="auditBadge"></div>
+          <h3 id="auditCategory"></h3>
+          <p id="auditAdvice"></p>
+          <div style="margin-top:10px;">
+            <button class="proceed-btn" onclick="proceedToPathway()">Proceed to treatment pathway ↓</button>
+            <br/>
+            <button class="audit-reset" onclick="resetAudit()">Redo AUDIT</button>
+          </div>
+        </div>
+      </div>
+      <!-- ══════════════ END AUDIT ══════════════ -->
+
+      <!-- Rest of pathway (shown after AUDIT) -->
+      <div id="mainPathway" class="hidden">
+
+        <!-- Gateway 2 -->
+        <div class="gateway-wrap" style="margin-bottom:16px;">
+          <div class="gateway">⬡ Gateway Point — Before Starting Any Treatment</div>
+          <div style="font-family:sans-serif;font-size:11px;color:#374151;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;max-width:560px;width:100%;text-align:left;">
+            <p style="margin-bottom:4px;">Confirm baseline assessment completed (NICE 1.3.6.4):</p>
+            <p style="padding-left:12px;margin-bottom:2px;">• Comprehensive medical assessment</p>
+            <p style="padding-left:12px;margin-bottom:2px;">• Baseline <strong>U&amp;Es</strong> and <strong>LFTs</strong> (including GGT)</p>
+            <p style="padding-left:12px;margin-bottom:2px;">• Review contraindications and cautions (see individual SPC)</p>
+            <p style="padding-left:12px;margin-bottom:2px;">• Discuss findings with the service user</p>
+            <p style="padding-left:12px;">• Obtain and document <strong>informed consent</strong></p>
+          </div>
+        </div>
+
+        <!-- Two branches -->
+        <div class="branches">
+
+          <!-- LEFT: Malnutrition -->
+          <div class="branch">
+            <div class="box blue" style="width:100%;">Is patient at risk of malnutrition?</div>
+            <div class="btn-row" id="malnutritionButtons">
+              <button class="btn yes" onclick="chooseMalnutrition(true)">YES</button>
+              <button class="btn" style="background:#6b7280;color:white;" onclick="chooseMalnutrition(false)">NO</button>
+            </div>
+            <div id="malnutritionNo" class="hidden" style="width:100%;margin-top:8px;">
+              <div class="arrow-wrap"><div class="arrow-label" style="color:#6b7280;">NO</div><div class="arrow-line" style="background:#6b7280;"></div><div class="arrow-head" style="border-top:8px solid #6b7280;"></div></div>
+              <div style="font-family:sans-serif;font-size:11px;color:#6b7280;background:#f1f5f9;border-radius:8px;padding:8px;text-align:center;">No thiamine indicated. Continue to monitor nutritional status.</div>
+            </div>
+            <div id="malnutritionYes" class="hidden" style="width:100%;">
+              <div class="arrow-wrap"><div class="arrow-label" style="color:#16a34a;">YES</div><div class="arrow-line" style="background:#16a34a;"></div><div class="arrow-head" style="border-top:8px solid #16a34a;"></div></div>
+              <div class="box grey" style="width:100%;">Assess the Severity / Risk</div>
+              <div class="thiamine-grid">
+                <div>
+                  <div class="thiamine-label">If mild/moderate</div>
+                  <div class="box orange">Offer oral Thiamine 100mg TDS for the prevention of Wernicke's Encephalopathy</div>
+                  <p style="font-family:sans-serif;font-size:10px;color:#6b7280;margin-top:5px;font-style:italic;">*Thiamine should be prescribed as a split daily dose rather than a single dose to increase absorption.</p>
+                </div>
+                <div>
+                  <div class="thiamine-label">If severe</div>
+                  <div class="box orange">Refer for parenteral thiamine</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Treatment -->
+          <div class="branch">
+            <div class="box blue" style="width:100%;">Initiation or Continuation of treatment?</div>
+            <div class="btn-row" id="txButtons">
+              <button class="btn blue" onclick="chooseTx('continuation')">Continuation</button>
+              <button class="btn navy" onclick="chooseTx('initiation')">Initiation</button>
+            </div>
+
+            <div id="continuationPanel" class="hidden" style="width:100%;">
+              <div class="arrow-wrap"><div class="arrow-label" style="color:#2563eb;">CONTINUATION</div><div class="arrow-line" style="background:#2563eb;"></div><div class="arrow-head" style="border-top:8px solid #2563eb;"></div></div>
+              <div class="panel" style="border:2px solid #bfdbfe;">
+                <div class="panel-title" style="color:#1d4ed8;">Continue &amp; Review</div>
+                <ul style="font-family:sans-serif;font-size:11px;color:#374151;padding-left:14px;">
+                  <li>Continue current pharmacological therapy</li>
+                  <li>Monitor adherence</li>
+                  <li>Review for drinking relapse</li>
+                </ul>
+                <div style="font-family:sans-serif;font-size:11px;color:#1e293b;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;margin-top:8px;line-height:1.7;">
+                  <div style="margin-bottom:8px;"><strong style="color:#1a7abf;">Acamprosate</strong><br/>
+                    <span style="color:#374151;"><strong>Body-weight up to 60 kg:</strong> 666 mg once daily, to be taken at breakfast and 333 mg twice daily, to be taken at midday and at night.</span><br/>
+                    <span style="color:#374151;"><strong>Body-weight 60 kg and above:</strong> 666 mg 3 times a day.</span>
+                  </div>
+                  <div style="margin-bottom:8px;border-top:1px solid #e2e8f0;padding-top:8px;"><strong style="color:#1a7abf;">Naltrexone</strong><br/>
+                    <span style="color:#374151;">Adjunct to prevent relapse in formerly alcohol-dependent patients (initiated under specialist supervision): 25 mg once daily on the first day, then increased if tolerated to 50 mg daily.</span>
+                  </div>
+                  <div style="border-top:1px solid #e2e8f0;padding-top:8px;"><strong style="color:#1a7abf;">Disulfiram*</strong><br/>
+                    <span style="color:#374151;">Adjunct in the treatment of alcohol dependence (initiated under specialist supervision): 200 mg daily, increased if necessary up to 500 mg daily.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="initiationPanel" class="hidden" style="width:100%;">
+              <div class="arrow-wrap"><div class="arrow-label" style="color:#1e3a5f;">INITIATION</div><div class="arrow-line" style="background:#1e3a5f;"></div><div class="arrow-head" style="border-top:8px solid #1e3a5f;"></div></div>
+              <div class="panel" style="border:2px solid #1e3a5f;">
+                <div class="panel-title" style="color:#1e3a5f;">First-line Options (NICE 1.3.6.1)</div>
+                <div class="drug-option first">Acamprosate — initiated by IP pharmacist in the community</div>
+                <div style="font-family:sans-serif;font-size:11px;font-weight:700;color:#16a34a;margin:8px 0;">Goal: Maintain abstinence</div>
+                <div style="font-family:sans-serif;font-size:11px;color:#1e293b;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;margin-top:6px;line-height:1.7;">
+                  <div style="margin-bottom:6px;"><strong>Adult 18–65 years (body-weight up to 60 kg)</strong><br/>666 mg once daily, to be taken at breakfast and 333 mg twice daily, to be taken at midday and at night.</div>
+                  <div><strong>Adult 18–65 years (body-weight 60 kg and above)</strong><br/>666 mg 3 times a day.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clinical notes box - shown after tx choice -->
+        <div id="clinicalNotes" class="hidden" style="max-width:760px;margin:20px auto 0;background:white;border:2px solid #1a7abf;border-radius:10px;padding:16px 18px;font-family:sans-serif;font-size:12px;color:#1e293b;line-height:1.7;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+          <p style="margin-bottom:10px;"><strong style="color:#1a7abf;">Acamprosate:</strong> If using acamprosate, start treatment as soon as possible after assisted withdrawal.</p>
+          <p style="margin-bottom:10px;"><strong style="color:#1a7abf;">Naltrexone:</strong> Offered as adjunct therapy in combination with an individual psychological intervention (cognitive behavioural therapies, behavioural therapies or social network and environment-based therapies) focused specifically on alcohol misuse.</p>
+          <p style="margin-bottom:10px;"><strong style="color:#1a7abf;">Disulfiram*</strong> is only indicated after a successful withdrawal for people with moderate and severe alcohol dependence. Consider offering disulfiram in combination with a psychological intervention to service users who:</p>
+          <ul style="padding-left:18px;margin-bottom:10px;">
+            <li style="margin-bottom:4px;">Have a goal of abstinence but for whom acamprosate and oral naltrexone are not suitable, <strong>OR</strong></li>
+            <li>Prefer disulfiram and understand the relative risks of taking the drug.</li>
+          </ul>
+          <p style="color:#475569;font-style:italic;">*It will be reserved for selected, highly motivated patients and delivered via pharmacist-led supervised administration, aligning with NICE guidance that supervision should occur where possible.</p>
+        </div>
+
+        <!-- For all patients -->
+        <div id="forAllBox" class="hidden" style="margin-top:14px;max-width:760px;margin-left:auto;margin-right:auto;border:2px solid #bfdbfe;border-radius:10px;overflow:hidden;font-family:sans-serif;font-size:12px;">
+          <button onclick="var b=document.getElementById('forAllBody');var c=document.getElementById('forAllChevron');var open=b.style.display!=='none';b.style.display=open?'none':'block';c.textContent=open?'▼':'▲';" style="width:100%;text-align:left;background:#eff6ff;border:none;padding:14px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-weight:700;font-size:13px;color:#1e3a5f;">For ALL patients receiving pharmacological treatment:</span>
+            <span id="forAllChevron" style="color:#1e3a5f;font-size:12px;">▼</span>
+          </button>
+          <div id="forAllBody" style="display:none;background:#eff6ff;padding:16px 18px;color:#1e293b;line-height:1.8;">
+
+          <!-- Acamprosate -->
+          <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #bfdbfe;">
+            <p style="font-weight:700;color:#1a7abf;margin-bottom:4px;">Acamprosate</p>
+            <p style="margin-bottom:4px;">Service users should stay under pharmacist supervision, at least monthly, for 6 months, and at reduced but regular intervals if the drug is continued after 6 months.</p>
+            <p>Do not use blood tests routinely, but consider them to monitor for recovery of liver function and as a motivational aid for service users to show improvement.</p>
+          </div>
+
+          <!-- Naltrexone -->
+          <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #bfdbfe;">
+            <p style="font-weight:700;color:#1a7abf;margin-bottom:4px;">Naltrexone</p>
+            <p style="margin-bottom:4px;">Service users should stay under pharmacist supervision, at least monthly, for 6 months, and at reduced but regular intervals if the drug is continued after 6 months.</p>
+            <p style="margin-bottom:4px;">Do not use blood tests routinely, but consider them for older people, for people with obesity, for monitoring recovery of liver function and as a motivational aid for service users to show improvement.</p>
+            <p style="margin-bottom:4px;">If the service user feels unwell advise them to stop oral naltrexone immediately.</p>
+            <p>Draw the service user's attention to the information card issued with oral naltrexone about its impact on opioid-based analgesics.</p>
+          </div>
+
+          <!-- Disulfiram -->
+          <div>
+            <p style="font-weight:700;color:#1a7abf;margin-bottom:4px;">Disulfiram*</p>
+            <p style="margin-bottom:4px;">Make sure that service users taking disulfiram:</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• stay under supervision, at least every 2 weeks for the first 2 months, then monthly for the following 4 months</p>
+            <p style="padding-left:16px;margin-bottom:8px;">• are medically monitored at least every 6 months after the initial 6 months of treatment and monitoring</p>
+            <p style="margin-bottom:4px;">Warn service users taking disulfiram, and their families and carers, about:</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• the interaction between disulfiram and alcohol (which may also be found in food, perfume, aerosol sprays and so on), the symptoms of which may include flushing, nausea, palpitations and, more seriously, arrhythmias, hypotension and collapse</p>
+            <p style="padding-left:16px;">• the rapid and unpredictable onset of the rare complication of hepatotoxicity — advise service users that if they feel unwell or develop a fever or jaundice they should stop taking disulfiram and seek urgent medical attention</p>
+          </div>
+          </div>
+        </div>
+
+        <!-- Gateway 3 -->
+        <div class="gateway-wrap hidden" style="margin-top:16px;" id="gateway3">
+          <div class="gateway">⬡ Gateway Point — 4 to 6 Week Review</div>
+          <div style="font-family:sans-serif;font-size:11px;color:#374151;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;max-width:600px;width:100%;text-align:left;">
+            <p style="margin-bottom:6px;font-weight:600;">Is the patient still drinking?</p>
+            <p style="margin-bottom:4px;">• <strong>Yes</strong> → Stop medication, reassess and refer to GP / specialist alcohol services</p>
+            <p>• <strong>No</strong> → Continue treatment and schedule next monthly supervision</p>
+          </div>
+        </div>
+
+        <!-- Gateway 4 -->
+        <div class="gateway-wrap hidden" style="margin-top:12px;" id="gateway4">
+          <div class="gateway">⬡ Gateway Point — 6 Month Review</div>
+          <div style="font-family:sans-serif;font-size:11px;color:#374151;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;max-width:600px;width:100%;text-align:left;">
+            <p style="margin-bottom:4px;">Reassess whether to:</p>
+            <p style="margin-bottom:4px;">• Continue treatment at reduced supervision intervals</p>
+            <p style="margin-bottom:4px;">• Extend treatment if patient is benefiting and wishes to continue</p>
+            <p>• Discharge from service if abstinence is maintained and patient is stable</p>
+          </div>
+        </div>
+
+        <!-- Not recommended -->
+        <button id="notRecBtn" class="hidden not-rec-header" onclick="toggleNotRec()">
+          <span>Drugs NOT recommended for alcohol dependence</span>
+          <span id="notRecChevron">▼</span>
+        </button>
+        <div class="not-rec-body" id="notRecBody">
+          <div class="not-rec-row"><span>Do NOT use antidepressants (including SSRIs) routinely for the treatment of alcohol misuse alone.</span></div>
+          <div class="not-rec-row"><span>Do NOT use gammahydroxybutyrate (GHB) for the treatment of alcohol misuse.</span></div>
+          <div class="not-rec-row"><span>Benzodiazepines: for withdrawal management only — NOT ongoing treatment for alcohol dependence.</span></div>
+        </div>
+
+        <!-- Safety Netting & Self Care -->
+        <div id="safetyBox" class="hidden" style="margin-top:12px;max-width:760px;margin-left:auto;margin-right:auto;background:#fff7ed;border:2px solid #fed7aa;border-radius:10px;padding:18px 20px;font-family:sans-serif;font-size:12px;color:#1e293b;line-height:1.8;">
+          <p style="font-weight:700;font-size:13px;color:#c2410c;margin-bottom:14px;">Safety Netting &amp; Self-Care Advice</p>
+
+          <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #fed7aa;">
+            <p style="font-weight:700;color:#c2410c;margin-bottom:4px;">When to seek urgent help</p>
+            <p style="margin-bottom:4px;">Advise service users to seek urgent medical attention if they experience any of the following:</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Symptoms of alcohol withdrawal (tremor, sweating, confusion, seizures) — even after successful assisted withdrawal</p>
+            <p style="padding-left:16px;">• Signs of severe liver problems: yellowing of skin or eyes, dark urine, persistent nausea or upper abdominal pain</p>
+          </div>
+
+          <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #fed7aa;">
+            <p style="font-weight:700;color:#c2410c;margin-bottom:4px;">Relapse prevention &amp; triggers</p>
+            <p style="margin-bottom:4px;">Discuss with the service user:</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Identifying personal triggers for drinking (e.g. social situations, stress, emotions)</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Developing coping strategies and a relapse prevention plan</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Importance of avoiding alcohol completely while taking disulfiram — including in food, sauces, mouthwash, perfume and aerosol sprays</p>
+            <p style="padding-left:16px;">• If a lapse occurs: do not stop medication abruptly — contact the pharmacist or GP as soon as possible</p>
+          </div>
+
+          <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #fed7aa;">
+            <p style="font-weight:700;color:#c2410c;margin-bottom:4px;">Self-care &amp; lifestyle advice (NICE CG115)</p>
+            <p style="margin-bottom:4px;">Encourage service users to:</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Engage with structured psychological support alongside pharmacological treatment (CBT, behavioural therapies or social network-based therapies)</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Maintain a balanced diet and stay well-hydrated — nutritional deficiencies are common in alcohol dependence</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Engage in regular physical activity to support mental wellbeing and reduce cravings</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Establish a daily routine to reduce unstructured time that may increase relapse risk</p>
+            <p style="padding-left:16px;">• Avoid people, places or situations closely associated with previous drinking behaviour where possible</p>
+          </div>
+
+          <div>
+            <p style="font-weight:700;color:#c2410c;margin-bottom:4px;">Support networks &amp; community resources</p>
+            <p style="margin-bottom:4px;">Signpost service users to:</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• <strong>Alcoholics Anonymous (AA)</strong> — peer-led mutual aid and 12-step programme: <em>www.alcoholics-anonymous.org.uk</em></p>
+            <p style="padding-left:16px;margin-bottom:2px;">• <strong>SMART Recovery</strong> — evidence-based self-management and recovery training programme</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• <strong>Al-Anon</strong> — support for families and carers of people with alcohol dependence</p>
+            <p style="padding-left:16px;margin-bottom:2px;">• Local community alcohol services and drug and alcohol teams (DATs)</p>
+            <p style="padding-left:16px;">• NHS Talking Therapies (formerly IAPT) for psychological support</p>
+          </div>
+        </div>
+
+
+      </div><!-- end mainPathway -->
+    </div><!-- end stablePath -->
+  </div>
+
+  <!-- Sidebar always in DOM, sections revealed by JS -->
+  <div class="sb-wrap">
+
+          <div class="sb-section">
+            <button class="sb-header" onclick="var b=this.nextElementSibling;b.classList.toggle('open');this.querySelector('span:last-child').textContent=b.classList.contains('open')?'▲':'▼';" style="background:#2d6a4f;">
+              <span>Inclusion / Exclusion Criteria</span><span>▼</span>
+            </button>
+            <div class="sb-body" id="criteriaSbBody">
+              <div class="med-tabs">
+                <button class="med-tab active" onclick="switchMed(this,'incl')" style="font-size:10px;">Inclusion</button>
+                <button class="med-tab" onclick="switchMed(this,'excl')" style="font-size:10px;">Exclusion</button>
+              </div>
+              <div class="med-panel active" id="med-incl">
+                <p class="med-label" style="color:#166534;">Inclusion Criteria</p>
+                <ul style="padding-left:14px;margin:0;line-height:1.8;">
+                  <li>Aged 18 or over</li>
+                  <li>Completed medically assisted alcohol withdrawal</li>
+                  <li>Any gender with a mental health comorbidity</li>
+                  <li>Abstinent from alcohol or mild lapse</li>
+                  <li>Registered with an Ealing GP</li>
+                </ul>
+              </div>
+              <div class="med-panel" id="med-excl">
+                <p class="med-label" style="color:#991b1b;">Exclusion Criteria</p>
+                <ul style="padding-left:14px;margin:0;line-height:1.8;">
+                  <li>Pregnant</li>
+                  <li><strong>Renal impairment:</strong> Cr &gt; 120µmol/L [acamprosate]; Severe impairment [naltrexone]</li>
+                  <li><strong>Hepatic impairment:</strong> Cautioned in severe hepatic failure [acamprosate]; Severe/acute impairment, acute hepatitis, or hepatic failure [naltrexone]</li>
+                  <li>Active suicidal crisis requiring urgent secondary care</li>
+                  <li>Severe psychiatric disorders requiring specialist care</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="sb-section">
+            <button class="sb-header" onclick="var b=this.nextElementSibling;b.classList.toggle('open');this.querySelector('span:last-child').textContent=b.classList.contains('open')?'▲':'▼';">
+              <span>Medication Reference</span><span>▼</span>
+            </button>
+            <div class="sb-body" id="medRefSbBody">
+              <div class="med-tabs">
+                <button class="med-tab active" onclick="switchMed(this,'thiamine')">Thiamine</button>
+                <button class="med-tab" onclick="switchMed(this,'acamprosate')">Acamprosate</button>
+                <button class="med-tab" onclick="switchMed(this,'naltrexone')">Naltrexone</button>
+                <button class="med-tab" onclick="switchMed(this,'disulfiram')">Disulfiram</button>
+              </div>
+              <div class="med-panel active" id="med-thiamine">
+                <p class="med-label">Legal Classification</p>
+                <p><span class="pom-badge">POM</span> Prescription Only Medicine</p>
+                <p class="med-label">Strength &amp; Formulation</p>
+                <p>Thiamine 100mg tablets (oral)<br>Pabrinex IV/IM — parenteral, hospital setting only</p>
+              </div>
+              <div class="med-panel" id="med-acamprosate">
+                <p class="med-label">Legal Classification</p>
+                <p><span class="pom-badge">POM</span> Prescription Only Medicine</p>
+                <p class="med-label">Strength &amp; Formulation</p>
+                <p>Acamprosate calcium 333mg gastro-resistant tablets</p>
+              </div>
+              <div class="med-panel" id="med-naltrexone">
+                <p class="med-label">Legal Classification</p>
+                <p><span class="pom-badge">POM</span> Prescription Only Medicine</p>
+                <p class="med-label">Strength &amp; Formulation</p>
+                <p>Naltrexone hydrochloride 50mg tablets</p>
+              </div>
+              <div class="med-panel" id="med-disulfiram">
+                <p class="med-label">Legal Classification</p>
+                <p><span class="pom-badge">POM</span> Prescription Only Medicine</p>
+                <p class="med-label">Strength &amp; Formulation</p>
+                <p>Disulfiram 200mg tablets</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end sb-wrap -->
+
+  <div class="footer">
+    National Institute for Health and Care Excellence [NICE]. Alcohol-use disorders: diagnosis, assessment and management of harmful drinking (high-risk drinking) and alcohol dependence. Clinical guideline [CG115]. 2011.<br/>
+    Joint Formulary Committee. British National Formulary (BNF). London: BMJ Group and Pharmaceutical Press. Available at: bnf.nice.org.uk<br/>
+    AUDIT: Babor TF et al. AUDIT: The Alcohol Use Disorders Identification Test. WHO, 2001.
+  </div>
+</div>
+
+<script>
+  var scores = {};
+
+  function selectOpt(btn, q, val) {
+    var group = btn.parentElement.querySelectorAll('.audit-opt');
+    group.forEach(function(b) { b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    scores[q] = val;
+  }
+
+  function calcAudit() {
+    var answered = Object.keys(scores).length;
+    if (answered < 10) {
+      alert('Please answer all 10 questions before calculating.');
+      return;
+    }
+    var total = 0;
+    for (var q in scores) { total += scores[q]; }
+
+    var result = document.getElementById('auditResult');
+    var badge  = document.getElementById('auditBadge');
+    var cat    = document.getElementById('auditCategory');
+    var advice = document.getElementById('auditAdvice');
+
+    var range = total <= 7 ? '0–7: indicates low-risk' : total <= 15 ? '8–15: indicates increasing risk' : total <= 19 ? '16–19: indicates higher risk' : '20–40: indicates possible dependence';
+    badge.textContent = 'Score: ' + total + ' / 40   |   ' + range;
+    result.className = 'audit-result open';
+
+    if (total <= 7) {
+      result.classList.add('result-low');
+      cat.textContent = 'Low-risk drinking';
+      advice.innerHTML = 'The patient is suitable to proceed with pharmacological treatment in the community pharmacy. Continue to the pathway below.';
+    } else if (total <= 15) {
+      result.classList.add('result-mod');
+      cat.textContent = 'Increasing risk';
+      advice.innerHTML = '<strong>Refer to GP.</strong> Pharmacological treatment in the community pharmacy is not appropriate at this stage. The patient should be assessed by their GP for further management and support to reduce alcohol intake.';
+    } else if (total <= 19) {
+      result.classList.add('result-high');
+      cat.textContent = 'Higher risk';
+      advice.innerHTML = '<strong>Refer to specialist alcohol services.</strong> This score suggests the patient is not maintaining abstinence. Review current treatment, assess relapse triggers and refer to specialist alcohol services for further assessment and management.';
+    } else {
+      result.classList.add('result-high');
+      cat.textContent = 'Possible dependence';
+      advice.innerHTML = '<strong>Urgent specialist referral is required.</strong> Community pharmacy-led management is not appropriate at this stage. Refer immediately to specialist alcohol services and consider whether a further assisted withdrawal is required.';
+    }
+
+    document.getElementById('auditForm').style.display = 'none';
+  }
+
+  function resetAudit() {
+    scores = {};
+    document.querySelectorAll('.audit-opt').forEach(function(b) { b.classList.remove('selected'); });
+    document.getElementById('auditResult').className = 'audit-result';
+    document.getElementById('auditForm').style.display = 'block';
+  }
+
+  function proceedToPathway() {
+    document.getElementById('mainPathway').classList.remove('hidden');
+    document.getElementById('mainPathway').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function chooseStable(val) {
+    // highlight active button
+    var btns = document.getElementById('stableButtons').querySelectorAll('.btn');
+    btns[0].style.opacity = val ? '1' : '0.4';
+    btns[1].style.opacity = val ? '0.4' : '1';
+
+    document.getElementById('resetBtn').classList.remove('hidden');
+
+    if (val) {
+      document.getElementById('criteriaSbBody').classList.add('open');
+      document.getElementById('stablePath').classList.remove('hidden');
+      document.getElementById('notStable').classList.add('hidden');
+    } else {
+      document.getElementById('criteriaSbBody').classList.remove('open');
+      document.getElementById('notStable').classList.remove('hidden');
+      document.getElementById('stablePath').classList.add('hidden');
+      document.getElementById('mainPathway').classList.add('hidden');
+    }
+  }
+
+  function chooseMalnutrition(val) {
+    var btns = document.getElementById('malnutritionButtons').querySelectorAll('.btn');
+    btns[0].style.opacity = val ? '1' : '0.4';
+    btns[1].style.opacity = val ? '0.4' : '1';
+
+    if (val) {
+      document.getElementById('malnutritionYes').classList.remove('hidden');
+      document.getElementById('malnutritionNo').classList.add('hidden');
+    } else {
+      document.getElementById('malnutritionNo').classList.remove('hidden');
+      document.getElementById('malnutritionYes').classList.add('hidden');
+    }
+  }
+
+  function chooseTx(type) {
+    var btns = document.getElementById('txButtons').querySelectorAll('.btn');
+    btns[0].style.opacity = type === 'continuation' ? '1' : '0.4';
+    btns[1].style.opacity = type === 'initiation'   ? '1' : '0.4';
+
+    document.getElementById('clinicalNotes').classList.remove('hidden');
+    document.getElementById('forAllBox').classList.remove('hidden');
+    document.getElementById('notRecBtn').classList.remove('hidden');
+    document.getElementById('gateway3').classList.remove('hidden');
+    document.getElementById('gateway4').classList.remove('hidden');
+    document.getElementById('safetyBox').classList.remove('hidden');
+    document.getElementById('medRefSbBody').classList.add('open');
+
+    if (type === 'continuation') {
+      document.getElementById('continuationPanel').classList.remove('hidden');
+      document.getElementById('initiationPanel').classList.add('hidden');
+    } else {
+      document.getElementById('initiationPanel').classList.remove('hidden');
+      document.getElementById('continuationPanel').classList.add('hidden');
+    }
+  }
+
+  function reset() { location.reload(); }
+
+  function toggleAcc(id) {
+    var acc  = document.getElementById(id);
+    var body = acc.querySelector('.accordion-body');
+    var span = acc.querySelector('.accordion-header span:last-child');
+    var open = body.classList.contains('open');
+    body.classList.toggle('open', !open);
+    if (span) span.textContent = open ? '▼' : '▲';
+  }
+
+  function toggleNotRec() {
+    var body = document.getElementById('notRecBody');
+    var ch   = document.getElementById('notRecChevron');
+    var open = body.classList.contains('open');
+    body.classList.toggle('open', !open);
+    ch.textContent = open ? '▼' : '▲';
+  }
+
+  function switchMed(tab, id) {
+    var tabs = tab.closest('.med-tabs').querySelectorAll('.med-tab');
+    var panels = tab.closest('.sb-body').querySelectorAll('.med-panel');
+    tabs.forEach(function(t){ t.classList.remove('active'); });
+    panels.forEach(function(p){ p.classList.remove('active'); });
+    tab.classList.add('active');
+    document.getElementById('med-' + id).classList.add('active');
+  }
+</script>
+
+
+
+<script>
+  function switchMed(tab, id) {
+    var tabs = tab.closest('.med-tabs').querySelectorAll('.med-tab');
+    var panels = tab.closest('.sb-body').querySelectorAll('.med-panel');
+    tabs.forEach(function(t){ t.classList.remove('active'); });
+    panels.forEach(function(p){ p.classList.remove('active'); });
+    tab.classList.add('active');
+    document.getElementById('med-' + id).classList.add('active');
+  }
+</script>
+</body>
+</html>
